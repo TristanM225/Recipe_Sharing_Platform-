@@ -28,16 +28,16 @@ export const ADD_USER = gql`
     }
 `;
 
-// will execute the saveBook mutation
-export const SAVE_BOOK = gql`
-    mutation saveBook($bookId: String!, $description: String!, $title: String! $authors: [String], $image: String, $link: String) {
-        saveBook(bookId: $bookId, description: $description, title: $title authors: $authors, image: $image, link: $link) {
+// will execute the saveRecipe mutation
+export const SAVE_RECIPE = gql`
+    mutation saveRecipe($recipeId: String!, $description: String!, $title: String! $authors: [String], $image: String, $link: String) {
+        saveRecipe(recipeId: $recipeId, description: $description, title: $title author: $author, image: $image, link: $link) {
             _id
             username
             email
-            bookCount
-            savedBooks {
-                bookId
+            recipeCount
+            savedRecipes {
+                recipeId
                 title
                 description
                 authors
@@ -48,19 +48,19 @@ export const SAVE_BOOK = gql`
     }
 `;
 
-// will execute the removeBook mutation
-export const REMOVE_BOOK = gql`
-    mutation removeBook($bookId: String!) {
-        removeBook(bookId: $bookId) {
+// will execute the removeRecipe mutation
+export const REMOVE_RECIPE = gql`
+    mutation removeRecipe($recipeId: String!) {
+        removeRecipe(recipeId: $recipeId) {
             _id
             username
             email
-            bookCount
-            savedBooks {
-                bookId
+            recipeCount
+            savedRecipes {
+                recipeId
                 title
                 description
-                authors
+                author
                 image
                 link
             }

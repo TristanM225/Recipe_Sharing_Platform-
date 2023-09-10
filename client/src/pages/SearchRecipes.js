@@ -9,28 +9,28 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { searchGoogleBooks } from '../utils/API';
-import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+import { searchRecipes } from '../utils/API';
+import { saveRecipeIds, getSavedRecipeIds } from '../utils/localStorage';
 import { useMutation } from '@apollo/client';
-import { SAVE_BOOK } from '../utils/mutations';
+import { SAVE_RECIPE } from '../utils/mutations';
 
-const SearchBooks = () => {
-  const [saveBook] = useMutation(SAVE_BOOK);
-  // create state for holding returned google api data
-  const [searchedBooks, setSearchedBooks] = useState([]);
+const SearchRecipes = () => {
+  const [saveRecipe] = useMutation(SAVE_RECIPE);
+  // create state for holding returned api data
+  const [searchedRecipes, setSearchedRecipes] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
-  // create state to hold saved bookId values
-  const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+  // create state to hold saved recipeId values
+  const [savedRecipeIds, setSavedRecipeIds] = useState(getSavedRecipeIds());
 
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
+  // set up useEffect hook to save `savedRecipeIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
-    return () => saveBookIds(savedBookIds);
+    return () => saveRecipeIds(savedRecipeIds);
   });
 
-  // create method to search for books and set state on form submit
+  // create method to search for recipes and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -39,7 +39,7 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await searchGoogleBooks(searchInput);
+      const response = await searchRecipes(searchInput);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
@@ -47,39 +47,39 @@ const SearchBooks = () => {
 
       const { items } = await response.json();
 
-      const bookData = items.map((book) => ({
-        bookId: book.id,
-        authors: book.volumeInfo.authors || ['No author to display'],
-        title: book.volumeInfo.title,
-        description: book.volumeInfo.description,
-        image: book.volumeInfo.imageLinks?.thumbnail || '',
-        link: book.volumeInfo.infoLink
+      const recipeData = items.map((recipe) => ({
+        recipeId: recipe.id,
+        author: 'insert author here', // TODO: figure out what the API returns
+        title: 'insert title here',
+        description: 'insert description here',
+        image: '',
+        link: 'insert link'
       }));
 
-      setSearchedBooks(bookData);
+      setSearchedRecipes(recipeData);
       setSearchInput('');
     } catch (err) {
       console.error(err);
     }
   };
 
-  // create function to handle saving a book to our database
-  const handleSaveBook = async (bookId) => {
-    // find the book in `searchedBooks` state by the matching id
-    const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+  // create function to handle saving a recipe to our database
+  const handleSaveREcipe= async (recipeId) => {
+    // find the recipe in `searchedRecipes` state by the matching id
+    const recipeToSave = searchedRecipes.find((recipe) => recipe.recipeId === recipeId);
 
     if (!Auth.loggedIn()) {
       return false;
     }
 
     try {
-      await saveBook(
+      await saveRecipe(
         {
-          variables: bookToSave,
+          variables: recipeToSave,
         }
       );
-      // if book successfully saves to user's account, save book id to state
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      // if recipe successfully saves to user's account, save recipe id to state
+      setSavedRecipeIds([...savedRecipeIds, recipeToSave.recipeId]);
     } catch (err) {
       console.error(err);
     }
@@ -89,7 +89,7 @@ const SearchBooks = () => {
     <>
       <div className='text-light bg-dark pt-5'>
         <Container>
-          <h1>Search for Books!</h1>
+          <h1>Search for Recipes</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
@@ -99,7 +99,7 @@ const SearchBooks = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type='text'
                   size='lg'
-                  placeholder='Search for a book'
+                  placeholder='Search for a recipe'
                 />
               </Col>
               <Col xs={12} md={4}>
@@ -114,32 +114,32 @@ const SearchBooks = () => {
 
       <Container>
         <h2 className='pt-5'>
-          {searchedBooks.length
-            ? `Viewing ${searchedBooks.length} results:`
-            : 'Search for a book to begin'}
+          {searchedRecipes.length
+            ? `Viewing ${searchedRecipes.length} results:`
+            : 'Search for a recipe'}
         </h2>
         <Row>
-          {searchedBooks.map((book) => {
+          {searchedRecipes.map((recipe) => {
             return (
               <Col md="4">
-                <Card key={book.bookId} border='dark'>
-                  {book.image ? (
-                    <Card.Link href={book.link} target="_blank" rel="noreferrer">
-                    <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
+                <Card key={recipe.recipeId} border='dark'>
+                  {recipe.image ? (
+                    <Card.Link href={recipe.link} target="_blank" rel="noreferrer">
+                    <Card.Img src={recipe.image} alt={`Image for the recipe ${recipe.title}`} variant='top' />
                     </Card.Link>
                   ) : null}
                   <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <p className='small'>Authors: {book.authors}</p>
-                    <Card.Text>{book.description}</Card.Text>
+                    <Card.Title>{recipe.title}</Card.Title>
+                    <p className='small'>Author: {recipe.author}</p>
+                    <Card.Text>{recipe.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
-                        disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
+                        disabled={savedRecipeIds?.some((savedRecipeId) => savedRecipeId === recipe.recipeId)}
                         className='btn-block btn-info'
-                        onClick={() => handleSaveBook(book.bookId)}>
-                        {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
-                          ? 'This book has already been saved!'
-                          : 'Save this Book!'}
+                        onClick={() => handleSaveRecipe(recipe.recipeId)}>
+                        {savedRecipeIds?.some((savedRecipeId) => savedRecipeId === recipe.recipeId)
+                          ? 'This recipe has already been saved!'
+                          : 'Save this Recipe!'}
                       </Button>
                     )}
                   </Card.Body>
@@ -153,4 +153,4 @@ const SearchBooks = () => {
   );
 };
 
-export default SearchBooks;
+export default SearchRecipes;

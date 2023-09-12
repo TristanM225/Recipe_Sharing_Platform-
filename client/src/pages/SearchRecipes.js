@@ -8,6 +8,9 @@ import {
   Row
 } from 'react-bootstrap';
 
+//import { Button, ButtonGroup } from '@chakra-ui/react'
+
+
 import Auth from '../utils/auth';
 import { searchRecipes } from '../utils/API';
 import { saveRecipeIds, getSavedRecipeIds } from '../utils/localStorage';
@@ -64,7 +67,7 @@ const SearchRecipes = () => {
   };
 
   // create function to handle saving a recipe to our database
-  const handleSaveREcipe= async (recipeId) => {
+  const handleSaveRecipe= async (recipeId) => {
     // find the recipe in `searchedRecipes` state by the matching id
     const recipeToSave = searchedRecipes.find((recipe) => recipe.recipeId === recipeId);
 
@@ -85,10 +88,26 @@ const SearchRecipes = () => {
     }
   };
 
+  let imageStyle = {
+      height: "1080px",
+      width: "auto",
+      backgroundImage:
+      'url("/background-kitchen.jpg")',
+      backgroundSize: "contain",
+      backgroundRepeat: "no-repeat",
+      color: "white", 
+   };
+
   return (
     <>
-      <div className='text-light bg-dark pt-5'>
-        <Container>
+    <div className = "image" style = {imageStyle}>
+    {/* <div className='text-on-image'>
+      <h1> Check Us Out! </h1>
+      <p> Go on a culinary adventure by exploring new recipes uploaded by people all over the world and share your favorites! </p> 
+    </div> */}
+    <Container>
+      <h1> Check Us Out! </h1>
+      <p> Go on a culinary adventure by exploring new recipes uploaded by people all over the world and share your favorites! </p> 
           <h1>Search for Recipes</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row>
@@ -104,51 +123,13 @@ const SearchRecipes = () => {
               </Col>
               <Col xs={12} md={4}>
                 <Button type='submit' variant='success' size='lg'>
-                  Submit Search
+                  Search
                 </Button>
               </Col>
             </Row>
           </Form>
         </Container>
       </div>
-
-      <Container>
-        <h2 className='pt-5'>
-          {searchedRecipes.length
-            ? `Viewing ${searchedRecipes.length} results:`
-            : 'Search for a recipe'}
-        </h2>
-        <Row>
-          {searchedRecipes.map((recipe) => {
-            return (
-              <Col md="4">
-                <Card key={recipe.recipeId} border='dark'>
-                  {recipe.image ? (
-                    <Card.Link href={recipe.link} target="_blank" rel="noreferrer">
-                    <Card.Img src={recipe.image} alt={`Image for the recipe ${recipe.title}`} variant='top' />
-                    </Card.Link>
-                  ) : null}
-                  <Card.Body>
-                    <Card.Title>{recipe.title}</Card.Title>
-                    <p className='small'>Author: {recipe.author}</p>
-                    <Card.Text>{recipe.description}</Card.Text>
-                    {Auth.loggedIn() && (
-                      <Button
-                        disabled={savedRecipeIds?.some((savedRecipeId) => savedRecipeId === recipe.recipeId)}
-                        className='btn-block btn-info'
-                        onClick={() => handleSaveRecipe(recipe.recipeId)}>
-                        {savedRecipeIds?.some((savedRecipeId) => savedRecipeId === recipe.recipeId)
-                          ? 'This recipe has already been saved!'
-                          : 'Save this Recipe!'}
-                      </Button>
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      </Container>
     </>
   );
 };

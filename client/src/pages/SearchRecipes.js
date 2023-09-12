@@ -106,12 +106,16 @@ const SearchRecipes = () => {
       <p> Go on a culinary adventure by exploring new recipes uploaded by people all over the world and share your favorites! </p> 
     </div> */}
     <Container>
-      <h1> Check Us Out! </h1>
-      <p> Go on a culinary adventure by exploring new recipes uploaded by people all over the world and share your favorites! </p> 
-          <h1>Search for Recipes</h1>
+      <Row className="description">
+        <Col xs={12} md={{ span: 6, offset: 2 }} className="mt-5">
+        <h1> Check Us Out! </h1>
+        <h4> Go on a culinary adventure by exploring new recipes uploaded by people all over the world and share your favorites! </h4> 
+        </Col>
+      </Row>
+          {/* <h1>Search for Recipes</h1> */}
           <Form onSubmit={handleFormSubmit}>
             <Row>
-              <Col xs={12} md={8}>
+              <Col xs={12} md={{ span: 6, offset: 2 }} className="mt-4">
                 <Form.Control
                   name='searchInput'
                   value={searchInput}
@@ -121,7 +125,7 @@ const SearchRecipes = () => {
                   placeholder='Search for a recipe'
                 />
               </Col>
-              <Col xs={12} md={4}>
+              <Col xs={12} md={{ span: 4}} className="mt-4">
                 <Button type='submit' variant='success' size='lg'>
                   Search
                 </Button>

@@ -106,9 +106,13 @@ const SearchRecipes = () => {
       <p> Go on a culinary adventure by exploring new recipes uploaded by people all over the world and share your favorites! </p> 
     </div> */}
     <Container>
-      <h1> Check Us Out! </h1>
-      <p> Go on a culinary adventure by exploring new recipes uploaded by people all over the world and share your favorites! </p> 
-          <h1>Search for Recipes</h1>
+      <Row className="description">
+        <Col xs={12} md={4} className="mt-5">
+        <h1> Check Us Out! </h1>
+        <p> Go on a culinary adventure by exploring new recipes uploaded by people all over the world and share your favorites! </p> 
+        </Col>
+      </Row>
+          {/* <h1>Search for Recipes</h1> */}
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>

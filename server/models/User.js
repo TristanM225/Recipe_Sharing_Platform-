@@ -21,6 +21,12 @@ const userSchema = new Schema(
       required: true,
     },
     savedRecipes: [recipeSchema],
+    posts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Post',
+      },
+    ],
   },
   {
     toJSON: {

@@ -36,6 +36,7 @@ const typeDefs = `
         postText: String
         postAuthor: String
         sharedRecipe: Recipe
+        createdAt: String
         comments: [Comment]!
     }
 
@@ -43,6 +44,7 @@ const typeDefs = `
         _id: ID
         commentText: String
         commentAuthor: String
+        createdAt: String
     }
 
     input SavedRecipeInput {

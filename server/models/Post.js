@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-// const dateFormat = require('../utils/dateFormat');
+const dateFormat = require('../utils/dateFormat');
 const recipeSchema = require("./Recipe");
 
 const postSchema = new Schema({
@@ -16,11 +16,11 @@ const postSchema = new Schema({
     trim: true,
   },
   sharedRecipe: recipeSchema,
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now,
-  //   get: (timestamp) => dateFormat(timestamp),
-  // },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    get: (timestamp) => dateFormat(timestamp),
+  },
   comments: [
     {
       commentText: {
@@ -33,11 +33,11 @@ const postSchema = new Schema({
         type: String,
         required: true,
       },
-      // createdAt: {
-      //   type: Date,
-      //   default: Date.now,
-      //   get: (timestamp) => dateFormat(timestamp),
-      // },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+        get: (timestamp) => dateFormat(timestamp),
+      },
     },
   ],
 });

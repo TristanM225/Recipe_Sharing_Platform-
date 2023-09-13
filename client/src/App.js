@@ -8,10 +8,10 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
-//import { ChakraProvider } from '@chakra-ui/react'
 
 import SearchRecipes from "./pages/SearchRecipes";
 import SavedRecipes from "./pages/SavedRecipes";
+import AddRecipe from "./pages/AddRecipe";
 import Navbar from "./components/Navbar";
 
 // Construct our main GraphQL API endpoint
@@ -48,6 +48,7 @@ function App() {
             <Routes>
               <Route path="/" element={<SearchRecipes />} />
               <Route path="/saved" element={<SavedRecipes />} />
+              <Route path="/addrecipe" element={<AddRecipe />} />
               <Route
                 path="*"
                 element={<h1 className="display-2">Wrong page!</h1>}

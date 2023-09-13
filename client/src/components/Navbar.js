@@ -29,7 +29,7 @@ const AppNavbar = () => {
                   <Nav.Link as={Link} to='/saved'>
                     View Saved Recipes
                   </Nav.Link>
-                  <Nav.Link as={Link} to='/saved'>
+                  <Nav.Link as={Link} to='/addrecipe'>
                     Add a Recipe 
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>

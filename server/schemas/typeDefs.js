@@ -1,4 +1,3 @@
-
 const typeDefs = `
     type User {
         _id: ID!
@@ -7,7 +6,7 @@ const typeDefs = `
         password: String!
         recipeCount: Int
         savedRecipes: [Recipe]
-        posts: [Post]!
+        posts: [Post]
     }
 
     type Recipe {
@@ -37,7 +36,7 @@ const typeDefs = `
         postAuthor: String
         sharedRecipe: Recipe
         createdAt: String
-        comments: [Comment]!
+        comments: [Comment]
     }
 
     type Comment {

@@ -10,6 +10,8 @@ import {
 
 //import { Button, ButtonGroup } from '@chakra-ui/react'
 
+// import { Button } from 'antd';
+
 
 import Auth from '../utils/auth';
 import { searchRecipes } from '../utils/API';
@@ -126,7 +128,7 @@ const SearchRecipes = () => {
                 />
               </Col>
               <Col xs={12} md={{ span: 4}} className="mt-4">
-                <Button type='submit' variant='success' size='lg'>
+                <Button type='primary' variant='success' size='lg'>
                   Search
                 </Button>
               </Col>

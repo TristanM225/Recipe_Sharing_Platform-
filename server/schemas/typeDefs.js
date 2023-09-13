@@ -31,6 +31,16 @@ const typeDefs = `
         meta: [String]
     }
 
+    input IngredientInput {
+        ingredientId: Int!
+        name: String!
+        aisle: String!
+        amount: Float!
+        consistency: String
+        unit: String
+        meta: [String]
+    }
+
     type Post {
         _id: ID!
         postText: String
@@ -50,7 +60,7 @@ const typeDefs = `
     input SavedRecipeInput {
         recipeId: Int!
         title: String!
-        ingredients: [Ingredient]
+        ingredients: [IngredientInput]
         analyzedInstructions: [String]
         servings: Int
         readyInMinutes: Int

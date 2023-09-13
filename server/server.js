@@ -9,7 +9,6 @@ const db = require('./config/connection');
 
 
 const { typeDefs, resolvers } = require('./schemas')
-const db = require('./config/connection');
 const { authMiddleware } = require('./utils/auth.js');
 
 const app = express();

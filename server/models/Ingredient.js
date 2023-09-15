@@ -14,7 +14,7 @@ const ingredientSchema = new Schema({
     required: true,
   },
   amount: {
-    type: Decimal128,
+    type: Number,
     required: true,
   },
   consistency: {

@@ -4,18 +4,22 @@ import {
   Col,
   Form,
   Button,
-  Card,
+  //Card,
   Row
 } from 'react-bootstrap';
 
 //import { Button, ButtonGroup } from '@chakra-ui/react'
 
+ //import { Button } from 'antd';
+ import { Card } from "antd";
 
 import Auth from '../utils/auth';
 import { searchRecipes } from '../utils/API';
 import { saveRecipeIds, getSavedRecipeIds } from '../utils/localStorage';
 import { useMutation } from '@apollo/client';
 import { SAVE_RECIPE } from '../utils/mutations';
+
+const { Meta } = Card;
 
 const SearchRecipes = () => {
   const [saveRecipe] = useMutation(SAVE_RECIPE);
@@ -93,20 +97,14 @@ const SearchRecipes = () => {
   let imageStyle = {
       height: "1080px",
       width: "auto",
-      backgroundImage:
-      'url("/background-kitchen.jpg")',
+      backgroundImage: 'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("/background-kitchen.jpg")',
       backgroundSize: "contain",
       backgroundRepeat: "no-repeat",
-      color: "white", 
    };
 
   return (
     <>
     <div className = "image" style = {imageStyle}>
-    {/* <div className='text-on-image'>
-      <h1> Check Us Out! </h1>
-      <p> Go on a culinary adventure by exploring new recipes uploaded by people all over the world and share your favorites! </p> 
-    </div> */}
     <Container>
       <Row className="description">
         <Col xs={12} md={{ span: 6, offset: 2 }} className="mt-5">
@@ -128,12 +126,66 @@ const SearchRecipes = () => {
                 />
               </Col>
               <Col xs={12} md={{ span: 4}} className="mt-4">
-                <Button type='submit' variant='success' size='lg'>
+                <Button type='primary' variant='success' size='lg'>
                   Search
                 </Button>
               </Col>
             </Row>
           </Form>
+          <Row>
+              <Col xs={12} md={{ span: 2, offset: 2 }} className="mt-4">
+              <Card
+                hoverable
+                style={{ width: 240, color: "#000000" }}
+                cover={
+                  <div style={{ overflow: "hidden", height: "100px" }}>
+                  <img
+                    alt="example"
+                    style={{ width: "100%" }}
+                    src="https://images-gmi-pmc.edge-generalmills.com/087d17eb-500e-4b26-abd1-4f9ffa96a2c6.jpg"
+                  />
+                  </div>
+                }
+              >
+                <Meta title="Chocolate Chip Cookies" description="delicious cookies" />
+              </Card>
+              </Col>
+              <Col xs={12} md={{ span: 2, offset: 1 }} className="mt-4">
+              <Card
+                hoverable
+                style={{ width: 240, color: "#000000" }}
+                cover={
+                  <div style={{ overflow: "hidden", height: "100px" }}>
+                     <img
+                    alt="example"
+                    style={{ width: "100%" }}
+                    src="https://hips.hearstapps.com/hmg-prod/images/copycat-shake-shack-burger-4-min-1649427734.jpg?crop=0.668xw:1.00xh;0.123xw,0&resize=360:*"
+                  />
+                  </div>
+                }
+              >
+                <Meta title="Cheeseburger" description="Shake Shack copycat" />
+              </Card>
+              </Col>
+              <Col xs={12} md={{ span: 2, offset: 1 }} className="mt-4">
+              <Card
+                hoverable
+                style={{ width: 240, color: "#000000" }}
+                cover={
+                  <div style={{ overflow: "hidden", height: "100px" }}>
+                  <img
+                    alt="example"
+                    style={{ width: "100%" }}
+                    src="https://images.unsplash.com/photo-1599749011927-9a77278bfa61?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2788&q=80"
+                  />
+                  </div>
+                }
+              >
+                 <Meta title="Tomato Bowtie Pasta" description="simple and delicious pasta" />
+              </Card>
+
+              </Col>
+            </Row>
         </Container>
       </div>
 

@@ -27,7 +27,10 @@ const AppNavbar = () => {
               {Auth.loggedIn() ? (
                 <>
                   <Nav.Link as={Link} to='/saved'>
-                    See Your Recipes
+                    View Saved Recipes
+                  </Nav.Link>
+                  <Nav.Link as={Link} to='/addrecipe'>
+                    Add a Recipe 
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
@@ -75,3 +78,28 @@ const AppNavbar = () => {
 };
 
 export default AppNavbar;
+
+
+// import React from 'react';
+// import { Layout, Menu, Button } from 'antd';
+
+// const { Header } = Layout;
+
+// const AppNavbar = () => (
+//   <Layout className="layout">
+//     <Header style={{ display: 'flex', justifyContent: 'space-between' }}>
+    
+//       <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+//         <Menu.Item key="1" >Recipe Sharing</Menu.Item>
+//         <Menu.Item key="2" >Profile</Menu.Item>
+//         <Menu.Item key="3">Settings</Menu.Item>
+//       </Menu>
+//       <div>
+//         <Button type="primary" style={{ marginRight: '10px' }}>Sign in</Button>
+//         <Button>Sign up</Button>
+//       </div>
+//     </Header>
+//   </Layout>
+// );
+
+// export default AppNavbar;

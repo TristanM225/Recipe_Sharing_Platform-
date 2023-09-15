@@ -56,11 +56,13 @@ const SearchRecipes = () => {
 
       const recipeData = items.map((recipe) => ({
         recipeId: recipe.id,
-        author: 'insert author here', // TODO: figure out what the API returns
-        title: 'insert title here',
-        description: 'insert description here',
-        image: '',
-        link: 'insert link'
+        title: recipe.title, // TODO: figure out what the API returns
+        // ingredients: 'insert title here',
+        // analyzedInstructions: 'insert description here',
+        servings: recipe.servings,
+        readyInMinutes: recipe.readyInMinutes,
+        image: recipe.image,
+        sourceLink: recipe.sourceUrl,
       }));
 
       setSearchedRecipes(recipeData);
@@ -186,6 +188,42 @@ const SearchRecipes = () => {
             </Row>
         </Container>
       </div>
+
+      <Container>
+        <h2 className='pt-5'>
+          {searchedRecipes.length
+            ? `Viewing ${searchedRecipes.length} results:`
+            : 'Search for a book to begin'}
+        </h2>
+        <Row>
+          {searchedRecipes.map((recipe) => {
+            return (
+              <Col md="4" key={recipe.recipeId}>
+                <Card border='dark'>
+                  {recipe.image ? (
+                    <Card.Img src={recipe.image} alt={`${recipe.title}`} variant='top' />
+                  ) : null}
+                  <Card.Body>
+                    <Card.Title>{recipe.title}</Card.Title>
+                    <p className='small'>Servings: {recipe.servings}</p>
+                    <Card.Text>Time to Make: {recipe.readyInMinutes} Minutes</Card.Text>
+                    {Auth.loggedIn() && (
+                      <Button
+                        disabled={savedRecipeIds?.some((savedRecipeId) => savedRecipeId === recipe.recipeId)}
+                        className='btn-block btn-info'
+                        onClick={() => handleSaveRecipe(recipe.recipeId)}>
+                        {savedRecipeIds?.some((savedRecipeId) => savedRecipeId === recipe.recipeId)
+                          ? 'This Recipe has already been saved!'
+                          : 'Save this Recipe!'}
+                      </Button>
+                    )}
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
+      </Container>
     </>
   );
 };

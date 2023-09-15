@@ -47,12 +47,15 @@ const SearchRecipes = () => {
 
     try {
       const response = await searchRecipes(searchInput);
+      console.log(response);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
+      console.log(searchInput);
 
       const { items } = await response.json();
+      console.log(items);
 
       const recipeData = items.map((recipe) => ({
         recipeId: recipe.id,
@@ -64,6 +67,7 @@ const SearchRecipes = () => {
         image: recipe.image,
         sourceLink: recipe.sourceUrl,
       }));
+      console.log(recipeData);
 
       setSearchedRecipes(recipeData);
       setSearchInput('');

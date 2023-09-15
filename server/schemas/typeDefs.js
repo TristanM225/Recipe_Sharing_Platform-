@@ -49,8 +49,6 @@ const typeDefs = `
     input SavedRecipeInput {
         recipeId: Int!
         title: String!
-        ingredients: [Ingredient]
-        analyzedInstructions: [String]
         servings: Int
         readyInMinutes: Int
         image: String

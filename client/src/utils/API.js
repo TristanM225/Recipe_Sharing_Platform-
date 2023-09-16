@@ -1,4 +1,8 @@
 // route to get logged in user's info (needs the token)
+// 3baff913a7ad4e91a43d9a09f0bf8551
+
+
+
 export const getMe = (token) => {
   return fetch('/api/users/me', {
     headers: {

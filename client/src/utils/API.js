@@ -1,5 +1,5 @@
 // route to get logged in user's info (needs the token)
-const apiKey = '5c5ec38e31da4315a937d50dafc25701';
+import { apiKey } from './apiKey'; // Adjust the import path as needed
 
 export const getMe = (token) => {
   return fetch('/api/users/me', {
@@ -58,6 +58,7 @@ export const deleteRecipe = (recipeId, token) => {
 //   return fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
 // };
 
-export const searchRecipes = (query) => {
-  return fetch(`https://api.spoonacular.com/recipes/searchComplex?apiKey=${apiKey}&query=${query}`);
+export const searchRecipes = (query, number = 10) => {
+  // Use the `number` parameter in the URL string
+  return fetch(`https://api.spoonacular.com/recipes/searchComplex?apiKey=${apiKey}&query=${query}&number=10`);
 };

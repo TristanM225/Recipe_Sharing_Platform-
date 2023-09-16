@@ -1,7 +1,5 @@
 // route to get logged in user's info (needs the token)
-// 3baff913a7ad4e91a43d9a09f0bf8551
-
-
+const apiKey = '5c5ec38e31da4315a937d50dafc25701';
 
 export const getMe = (token) => {
   return fetch('/api/users/me', {
@@ -61,5 +59,5 @@ export const deleteRecipe = (recipeId, token) => {
 // };
 
 export const searchRecipes = (query) => {
-  return fetch(``);
-}
+  return fetch(`https://api.spoonacular.com/recipes/searchComplex?apiKey=${apiKey}&query=${query}`);
+};

@@ -21,23 +21,23 @@ const typeDefs = `
     }
 
     type Ingredient {
-        ingredientId: Int!
+       
         name: String!
-        aisle: String!
+       
         amount: Float!
-        consistency: String
+        
         unit: String
-        meta: [String]
+        
     }
 
     input IngredientInput {
-        ingredientId: Int!
+        
         name: String!
-        aisle: String!
+        
         amount: Float!
-        consistency: String
+        
         unit: String
-        meta: [String]
+        
     }
 
     type Post {

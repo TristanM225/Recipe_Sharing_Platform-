@@ -5,12 +5,13 @@ import {
   Row
 } from "react-bootstrap";
 
-import { Button, Form, Input, InputNumber } from 'antd';
+import { Button, Form, Input, InputNumber, Upload, Space } from 'antd';
+import { UploadOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
-
 import Auth from "../utils/auth";
+
 
 const layout = {
     labelCol: {
@@ -24,7 +25,6 @@ const layout = {
 const validateMessages = {
     required: '${label} is required!',
     types: {
-      email: '${label} is not a valid email!',
       number: '${label} is not a valid number!',
     },
     number: {
@@ -32,9 +32,9 @@ const validateMessages = {
     },
   };
 
-const onFinish = (values) => {
-    console.log(values);
-};
+  const onFinish = (values) => {
+    console.log('Received values of form:', values);
+  };
 
 const AddRecipe = () => {
   const { loading, data } = useQuery(GET_ME);
@@ -67,6 +67,7 @@ const AddRecipe = () => {
             maxWidth: 600,
             }}
             validateMessages={validateMessages}
+            autoComplete="off"
         >
             <Form.Item
             name={['recipe', 'title']}
@@ -80,15 +81,67 @@ const AddRecipe = () => {
             <Input />
             </Form.Item>
             <Form.Item
-            name={['recipe', 'ingredients']}
             label="Ingredients"
-            rules={[
-                {
-                required: true,
-                },
-            ]}
             >
-            <Input />
+                <Form.List name={['recipe', 'ingredients']}>
+      {(fields, { add, remove }) => (
+        <>
+          {fields.map(({ key, name, ...restField }) => (
+            <Space
+              key={key}
+              style={{
+                display: 'flex',
+                marginBottom: 8,
+              }}
+              align="baseline"
+            >
+              <Form.Item
+                {...restField}
+                name={[name, 'qty']}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Missing quantity',
+                  },
+                ]}
+              >
+              <Input placeholder="Qty (e.g. 1)" />
+              </Form.Item>
+              <Form.Item
+                {...restField}
+                name={[name, 'unit']}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Missing unit',
+                  },
+                ]}
+              >
+             <Input placeholder="Unit (e.g. cup)" />
+              </Form.Item>
+              <Form.Item
+                {...restField}
+                name={[name, 'ingredient']}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Missing ingredient',
+                  },
+                ]}
+              >
+                <Input placeholder="Ingredient" />
+              </Form.Item>
+              <MinusCircleOutlined onClick={() => remove(name)} />
+            </Space>
+          ))}
+          <Form.Item>
+            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+              Add field
+            </Button>
+          </Form.Item>
+        </>
+      )}
+    </Form.List>
             </Form.Item>
             <Form.Item
             name={['recipe', 'instructions']}
@@ -133,6 +186,18 @@ const AddRecipe = () => {
             >
             <Input />
             </Form.Item>
+
+            <Form.Item
+            name={['recipe', 'image']}
+            label="Recipe Image"
+            >
+            <Upload beforeUpload={() => false}
+                listType="picture"
+                >
+            <Button icon={<UploadOutlined />}>Upload</Button>
+            </Upload>
+            </Form.Item>
+
             <Form.Item
             wrapperCol={{
                 ...layout.wrapperCol,
@@ -151,4 +216,3 @@ const AddRecipe = () => {
 };
 
 export default AddRecipe;
-

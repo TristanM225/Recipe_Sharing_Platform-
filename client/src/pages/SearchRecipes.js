@@ -1,27 +1,22 @@
 // SearchRecipes.js
-import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Col,
-  Form,
-  Button,
-  Row,
-} from 'react-bootstrap';
-import { Card } from 'antd';
+import React, { useState, useEffect } from "react";
+import { Container, Col, Form, Button, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Card } from "antd";
 
-import Auth from '../utils/auth';
-import { searchRecipes } from '../utils/API';
-import { saveRecipeIds, getSavedRecipeIds } from '../utils/localStorage';
-import { useMutation } from '@apollo/client';
-import { SAVE_RECIPE } from '../utils/mutations';
-import { apiKey } from '../utils/apiKey';
+import Auth from "../utils/auth";
+import { searchRecipes } from "../utils/API";
+import { saveRecipeIds, getSavedRecipeIds } from "../utils/localStorage";
+import { useMutation } from "@apollo/client";
+import { SAVE_RECIPE } from "../utils/mutations";
+import { apiKey } from "../utils/apiKey";
 
 // const { Meta } = Card;
 
 const SearchRecipes = () => {
   const [saveRecipe] = useMutation(SAVE_RECIPE);
   const [searchedRecipes, setSearchedRecipes] = useState([]);
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const [savedRecipeIds, setSavedRecipeIds] = useState(getSavedRecipeIds());
   const [showResults, setShowResults] = useState(false);
 
@@ -38,14 +33,13 @@ const SearchRecipes = () => {
 
     try {
       const response = await searchRecipes(searchInput, apiKey);
-      console.log('API Response', response);
-
+      console.log("API Response", response);
       if (!response.ok) {
-        throw new Error('something went wrong!');
+        throw new Error("something went wrong!");
       }
 
       const data = await response.json();
-      console.log('Response Data:', data);
+      console.log("Response Data:", data);
 
       console.log(searchInput);
 
@@ -55,44 +49,47 @@ const SearchRecipes = () => {
       const recipeData = results.map((recipe) => ({
         recipeId: recipe.id,
         title: recipe.title,
-        servings: recipe.servings,
-        readyInMinutes: recipe.readyInMinutes,
+        // servings: recipe.servings,
+        // readyInMinutes: recipe.readyInMinutes,
         image: recipe.image,
-        sourceLink: recipe.sourceUrl,
+        // sourceLink: recipe.sourceUrl,
       }));
       console.log(recipeData);
 
       setSearchedRecipes(recipeData);
       setShowResults(true);
-      setSearchInput('');
+      setSearchInput("");
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleSaveRecipe = async (recipeId) => {
-    const recipeToSave = searchedRecipes.find((recipe) => recipe.recipeId === recipeId);
+  // const handleSaveRecipe = async (recipeId) => {
+  //   const recipeToSave = searchedRecipes.find(
+  //     (recipe) => recipe.recipeId === recipeId
+  //   );
 
-    if (!Auth.loggedIn()) {
-      return false;
-    }
+  //   if (!Auth.loggedIn()) {
+  //     return false;
+  //   }
 
-    try {
-      await saveRecipe({
-        variables: recipeToSave,
-      });
-      setSavedRecipeIds([...savedRecipeIds, recipeToSave.recipeId]);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  //   try {
+  //     await saveRecipe({
+  //       variables: recipeToSave,
+  //     });
+  //     setSavedRecipeIds([...savedRecipeIds, recipeToSave.recipeId]);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   let imageStyle = {
-    height: '1080px',
-    width: 'auto',
-    backgroundImage: 'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("/background-kitchen.jpg")',
-    backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat',
+    height: "1080px",
+    width: "auto",
+    backgroundImage:
+      'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("/background-kitchen.jpg")',
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
   };
 
   return (
@@ -102,7 +99,11 @@ const SearchRecipes = () => {
           <Row className="description">
             <Col xs={12} md={{ span: 6, offset: 2 }} className="mt-5">
               <h1> Check Us Out! </h1>
-              <h4> Go on a culinary adventure by exploring new recipes uploaded by people all over the world and share your favorites! </h4>
+              <h4>
+                {" "}
+                Go on a culinary adventure by exploring new recipes uploaded by
+                people all over the world and share your favorites!{" "}
+              </h4>
             </Col>
           </Row>
           <Form onSubmit={handleFormSubmit}>
@@ -124,19 +125,23 @@ const SearchRecipes = () => {
               </Col>
             </Row>
           </Form>
-          {showResults && (
-            <Row>
-              {searchedRecipes.map((recipe) => {
-                return (
-                  <Col md="4" key={recipe.recipeId}>
-                    <Card border="dark">
-                      {recipe.image ? (
-                        <Card.Img src={recipe.image} alt={`${recipe.title}`} variant="top" />
-                      ) : null}
-                      <Card.Body>
-                        <Card.Title>{recipe.title}</Card.Title>
-                        <p className="small">Servings: {recipe.servings}</p>
-                        <Card.Text>Time to Make: {recipe.readyInMinutes} Minutes</Card.Text>
+
+          <Row>
+            {searchedRecipes.map((recipe) => {
+              return (
+                <Col md="4" key={recipe.recipeId}>
+                  <div border="dark">
+                    {recipe.image ? (
+                      <img
+                        src={recipe.image}
+                        alt={`${recipe.title}`}
+                        variant="top"
+                      />
+                    ) : null}
+                    <div>
+                      <div>{recipe.title}</div>
+                      {/* <p className="small">Servings: {recipe.servings}</p>
+                        <p>Time to Make: {recipe.readyInMinutes} Minutes</p>
                         {Auth.loggedIn() && (
                           <Button
                             disabled={savedRecipeIds?.some((savedRecipeId) => savedRecipeId === recipe.recipeId)}
@@ -147,14 +152,19 @@ const SearchRecipes = () => {
                               ? 'This Recipe has already been saved!'
                               : 'Save this Recipe!'}
                           </Button>
-                        )}
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                );
-              })}
-            </Row>
-          )}
+                        )} */}
+                      <Link
+                        className="btn btn-primary btn-block btn-squared"
+                        to={`/recipe/${recipe.recipeId}`}
+                      >
+                        See How to Make this Dish!
+                      </Link>
+                    </div>
+                  </div>
+                </Col>
+              );
+            })}
+          </Row>
         </Container>
       </div>
     </>

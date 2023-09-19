@@ -12,6 +12,7 @@ import { setContext } from "@apollo/client/link/context";
 import SearchRecipes from "./pages/SearchRecipes";
 import SavedRecipes from "./pages/SavedRecipes";
 import AddRecipe from "./pages/AddRecipe";
+import RecipeDetails from './pages/RecipeDetails';
 import Navbar from "./components/Navbar";
 
 // Construct our main GraphQL API endpoint
@@ -39,8 +40,8 @@ const client = new ApolloClient({
 });
 
 function App() {
-   return (
- 
+  return (
+    // <ChakraProvider>
       <ApolloProvider client={client}>
         <Router>
           <>
@@ -49,6 +50,7 @@ function App() {
               <Route path="/" element={<SearchRecipes />} />
               <Route path="/saved" element={<SavedRecipes />} />
               <Route path="/addrecipe" element={<AddRecipe />} />
+              <Route path="/recipe/:recipeId" element={<RecipeDetails />} />
               <Route
                 path="*"
                 element={<h1 className="display-2">Wrong page!</h1>}
@@ -57,7 +59,7 @@ function App() {
           </>
         </Router>
       </ApolloProvider>
-
+    // </ChakraProvider>
   );
 }
 

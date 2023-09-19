@@ -87,6 +87,18 @@ const typeDefs = `
         addComment(postId: ID!, commentText: String!): Post
         removePost(postId: ID!): Post
         removeComment(postId: ID!, commentId: ID!): Post
+
+
+        addRecipe(
+            recipeID: String!,
+            title: String!,
+            ingredients:[IngredientInput!],
+            analyzedInstructions: String!,
+            servings: Int,
+            readyInMinutes: Int,
+            image: String,
+            sourceLink: String
+          ): User
     }
 `;
 

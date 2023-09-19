@@ -62,3 +62,7 @@ export const searchRecipes = (query, number = 10) => {
   // Use the `number` parameter in the URL string
   return fetch(`https://api.spoonacular.com/recipes/searchComplex?apiKey=${apiKey}&query=${query}&number=10`);
 };
+
+export const getRecipeDetails = (key) => {
+  return fetch(`https://api.spoonacular.com/recipes/${key}/information?apiKey=${apiKey}`);
+};

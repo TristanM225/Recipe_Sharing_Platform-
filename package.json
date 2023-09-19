@@ -2,6 +2,9 @@
   "name": "recipe-sharing-platform",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "v16.18.0"
+  },
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",

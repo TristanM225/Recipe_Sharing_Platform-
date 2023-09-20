@@ -27,3 +27,26 @@
   margin: 50px;
 
 }
+
+p {
+
+  text-align: center;
+  font-size: 20px;
+}
+
+.background {
+  background-color: rgb(196, 254, 110);
+  
+}
+
+.title {
+  text-decoration: underline;
+  text-align: center;
+}
+
+.center-text {
+  text-align: center;
+  font-size: 20px;
+  
+}
+

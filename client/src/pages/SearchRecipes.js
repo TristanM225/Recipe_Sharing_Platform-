@@ -130,8 +130,8 @@ const SearchRecipes = () => {
           <Row>
             {searchedRecipes.map((recipe) => {
               return (
-                <Col md="4" key={recipe.recipeId}>
-                  <div border="dark">
+                <Col className= "box d-flex align-items-center justify-content-center" md="4" key={recipe.recipeId}>
+                  <div >
                     {recipe.image ? (
                       <img
                         src={recipe.image}

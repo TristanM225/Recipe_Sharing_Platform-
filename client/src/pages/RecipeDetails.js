@@ -96,7 +96,7 @@ const RecipeDetails = () => {
 
   return (
     <>
-      <div>
+      <div className="background center-text">
         <Col md="4" key={recipeDetails.recipeId}>
           <div border="dark">
             {recipeDetails.image ? (
@@ -107,10 +107,10 @@ const RecipeDetails = () => {
               />
             ) : null}
             <div>
-              <div>{recipeDetails.title}</div>
+              <h1 className="title">{recipeDetails.title}</h1>
               <div>
                 <h3>Ingredients Needed:</h3>
-                <ul>
+                <ul className="center-text">
                   {ingredientsDetails.map((ingredient) => {
                     return (
                       <Col md="4" key={ingredient.ingredientId}>
@@ -120,9 +120,10 @@ const RecipeDetails = () => {
                   })}
                 </ul>
               </div>
-              <p className="small">Servings: {recipeDetails.servings}</p>
+              <p className="small center-text">Servings: {recipeDetails.servings}</p>
               <p>Time to Make: {recipeDetails.readyInMinutes} Minutes</p>
-              <p>Instructions: {recipeDetails.instructions}</p>
+
+              <p dangerouslySetInnerHTML={{ __html: recipeDetails.instructions }}></p>
               {Auth.loggedIn() && (
                 <Button
                   disabled={savedRecipeIds?.some(

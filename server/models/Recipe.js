@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
 const ingredientSchema = require("./Ingredient");
 
 // TODO: figure out what fields we want in the recipe

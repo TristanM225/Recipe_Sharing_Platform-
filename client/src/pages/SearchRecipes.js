@@ -83,6 +83,7 @@ const SearchRecipes = () => {
   //   }
   // };
 
+  // set the background image and style it to make it partially translucent
   let imageStyle = {
     height: "1080px",
     width: "auto",

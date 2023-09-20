@@ -5,6 +5,7 @@ import {
   Row
 } from "react-bootstrap";
 
+// use ant design library https://ant.design/ for UI components
 import { Button, Form, Input, InputNumber, Upload, Space } from 'antd';
 import { UploadOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
@@ -12,6 +13,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 
+// create a new mutation for adding recipe
 import { ADD_RECIPE } from '../utils/mutations';
 
 
@@ -24,6 +26,7 @@ const layout = {
     },
   };
 
+// validates user input; ensures user types in input with correct requirements
 const validateMessages = {
     required: '${label} is required!',
     types: {
@@ -34,6 +37,7 @@ const validateMessages = {
     },
   };
 
+// generates a random ID for the recipe
   const generateId = () => {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
@@ -51,17 +55,6 @@ const AddRecipe = () => {
         }
     
         try {
-          console.log(values)
-          console.log('wee')
-        //  recipeId
-        // title
-        // ingredients
-        // analyzedInstructions
-        // servings
-        // readyInMinutes
-        // image
-        // sourceLink
-
         const ingredientsData = values.recipe.ingredients.map((i) => ({
             amount: i.qty,
             unit: i.unit,
@@ -75,11 +68,9 @@ const AddRecipe = () => {
             analyzedInstructions: values.recipe.instructions,
             servings: values.recipe.servings,
             readyInMinutes: values.recipe.readyinminutes,
-            image: '', // how do i put image in? 
+            image: '', // TODO: insert image in here
             sourceLink: values.recipe.sourcelink,
           }
-          console.log("wat")
-          console.log(recipeData)
           await addRecipe(
             {
               variables: recipeData,
@@ -106,6 +97,9 @@ const AddRecipe = () => {
   }
 
   return (
+    // below returns a container containing a form allowing user to add a recipe with the fields:
+    // title, ingredients, instructions, servings, ready in minutes, source link, recipe image
+    // on user submit, the onFinish handler gets called to save the recipe
     <>
       <div fluid className='text-light bg-dark p-5'>
         <Container>

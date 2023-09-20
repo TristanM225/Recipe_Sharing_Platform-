@@ -14,7 +14,7 @@ import Auth from "../utils/auth";
 
 const SavedRecipes = () => {
   const { loading, data } = useQuery(GET_ME);
-  const [removeRecipe, { error }] = useMutation(REMOVE_RECIPE);
+  const [removeRecipe] = useMutation(REMOVE_RECIPE);
 
   const userData = data?.me || {};
 

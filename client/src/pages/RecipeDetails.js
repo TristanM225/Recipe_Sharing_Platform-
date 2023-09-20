@@ -7,6 +7,7 @@ import { getRecipeDetails } from "../utils/API";
 import { saveRecipeIds, getSavedRecipeIds } from "../utils/localStorage";
 import { useMutation } from "@apollo/client";
 import { SAVE_RECIPE } from "../utils/mutations";
+import { GET_ME } from '../utils/queries';
 import { apiKey } from "../utils/apiKey";
 
 const RecipeDetails = () => {
@@ -67,18 +68,27 @@ const RecipeDetails = () => {
     handleRecipeData();
   }, []);
 
-  const handleSaveRecipe = async () => {
-    const recipeToSave = recipeDetails.recipeId;
+  const handleSaveRecipe = async (recipeId) => {
+    const recipeToSave = recipeId;
+    console.log(recipeToSave);
+    console.log(savedRecipeIds);
 
-    if (!Auth.loggedIn()) {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
       return false;
     }
 
     try {
       await saveRecipe({
         variables: recipeToSave,
+        // this code may not be necessary
+        // update: cache => {
+        //   const { me } = cache.readQuery({ query: GET_ME });
+        //   cache.writeQuery({ query: GET_ME, data: { me: { ...me, savedRecipes: [...me.savedRecipes, recipeToSave] } } });
+        // }
       });
-      setSavedRecipeIds([...savedRecipeIds, recipeToSave.recipeId]);
+      setSavedRecipeIds([...savedRecipeIds, recipeToSave]);
     } catch (err) {
       console.error(err);
     }
@@ -97,21 +107,22 @@ const RecipeDetails = () => {
               />
             ) : null}
             <div>
-              <h3>Ingredients Needed:</h3>
-              <ul>
-                {ingredientsDetails.map((ingredient) => {
-                  return (
-                    <Col md="4" key={ingredient.ingredientId}>
-                      <li>{ingredient.name}</li>
-                    </Col>
-                  );
-                })}
-              </ul>
-            </div>
-            <div>
               <div>{recipeDetails.title}</div>
+              <div>
+                <h3>Ingredients Needed:</h3>
+                <ul>
+                  {ingredientsDetails.map((ingredient) => {
+                    return (
+                      <Col md="4" key={ingredient.ingredientId}>
+                        <li>{ingredient.name}</li>
+                      </Col>
+                    );
+                  })}
+                </ul>
+              </div>
               <p className="small">Servings: {recipeDetails.servings}</p>
               <p>Time to Make: {recipeDetails.readyInMinutes} Minutes</p>
+              <p>Instructions: {recipeDetails.instructions}</p>
               {Auth.loggedIn() && (
                 <Button
                   disabled={savedRecipeIds?.some(

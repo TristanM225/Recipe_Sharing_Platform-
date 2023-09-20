@@ -62,6 +62,26 @@ export const ADD_USER = gql`
 //   }
 // `;
 
+export const ADD_RECIPE = gql`
+    mutation addRecipe($recipeId: String!, $title: String!, $ingredients: [IngredientInput!], $analyzedInstructions: String, $servings: Int, $readyInMinutes: Int, $image: String, $sourceLink: String) {
+      addRecipe(recipeId: $recipeId, title: $title, ingredients: $ingredients, analyzedInstructions: $analyzedInstructions, servings: $servings, readyInMinutes: $readyInMinutes, image: $image, sourceLink: $sourceLink) {
+            _id
+            username
+            email
+            recipeCount
+            savedRecipes {
+              recipeId
+              title
+              ingredients
+              analyzedInstructions
+              servings
+              readyInMinutes
+              image
+              sourceLink
+            }
+        }
+    }
+`;
 export const SAVE_RECIPE = gql`
   mutation saveRecipe($recipeToSave: SavedRecipeInput) {
     saveRecipe(recipeToSave: $recipeToSave) {

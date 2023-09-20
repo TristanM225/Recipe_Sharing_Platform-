@@ -1,3 +1,13 @@
-# Receipt_Sharing_Platform-
-A general Receipt Sharing Platform 
-First commit 123 adding more stuff even more stuff even more
+# Recipe Me
+
+## Description
+
+Recipe Me allows users to search for recipes and save them to their accounts. Users can search up recipes through ingredients, nutrients, or dish names. Each recipe tells users what ingredients they need, how many servings are made, how long it takes to make, and how to make it. All recipe data was gathered throught Spoonacular API.
+
+## Screenshot of Application
+
+![Alt text](image.png)
+
+## Link to Application
+
+
